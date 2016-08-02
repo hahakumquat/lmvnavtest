@@ -79,8 +79,8 @@ var _myAuthToken = new MyAuthToken("PROD");
 // ];
 
 var _lmvModelOptions = [
-    { label: "1403 (dwfx)", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bG12bmF2X3NhbXBsZXMvMTQwMy5kd2Z4"}},
-    { label: "House (revit)", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bG12bmF2X3NhbXBsZXMvSG91c2UucnZ0"}}
+    { label: "1403 (dwfx)", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bG12bmF2X3NhbXBsZXMvMTQwMy5kd2Z4"},
+    { label: "House (revit)", urn: "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bG12bmF2X3NhbXBsZXMvSG91c2UucnZ0"}
 ];
 
 // var _lmvPlantModelOptions = [
