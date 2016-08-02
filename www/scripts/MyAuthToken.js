@@ -60,7 +60,7 @@ MyAuthToken.prototype.value = function()
         var secsElapsed = curTimestamp - this.timestamp;
         
         if (secsElapsed > (this.expires_in - 10)) { // if we are within 10 secs of expiring, get new token
-            console.log("AUTH TOKEN: expired, refreshing...");
+            console.log("AUTH TOKEN: expired, refreshing..."); 
             this.get();
         }
         else {
@@ -87,6 +87,7 @@ MyAuthToken.prototype.get = function()
         type: 'GET',
         async: false,
         success: function(ajax_data) {
+            console.log(ajax_data);
             console.log("AUTH TOKEN: " + ajax_data.access_token);
             retVal = ajax_data.access_token;  // NOTE: this only works because we've made the ajax call Synchronous (and "this" is not valid in this scope!)
             expires_in = ajax_data.expires_in;
