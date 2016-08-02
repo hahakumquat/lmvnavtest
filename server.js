@@ -9,7 +9,7 @@ var app = express();
 
 app.use('/', express.static(__dirname + '/www'));
 
-router.get('/token', function(req, res) {
+app.get('/token', function(req, res) {
     request.post(
         credentials.Authentication,
         { form : credentials.credentials },

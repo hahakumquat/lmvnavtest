@@ -1,6 +1,3 @@
-// x5coHdgh8FGCuwzAFOUt0Ahes8gcIBng
-// u3GoWWrrFYCA9i0C
-
 var credentials ={
 
 	credentials: {
