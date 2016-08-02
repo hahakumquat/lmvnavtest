@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js ie6 oldie" lang="en"></html>
+<![endif]--><!--[if IE 7]>
+<html class="no-js ie7 oldie" lang="en"></html>
+<![endif]--><!--[if IE 8]>
+<html class="no-js ie8 oldie" lang="en"></html>
+<![endif]--><!--[if gte IE 8]>
+<html class="no-js" lang="en"></html>
+<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <title>LMV Nav Test</title>
+    <meta content="Autodesk Developer Showcase Application" name="description" />
+    <meta content="Autodesk" name="author" />
+    <meta content="3D Model Viewer" name="keywords" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/libs/normalize.css" rel="stylesheet" type="text/css" />
+    <link href="./stylesheets/libs/nv.d3.css" rel="stylesheet">
+    <link href="./stylesheets/app.css" rel="stylesheet" type="text/css" />
+
+    <script src="./scripts/libs/jquery/jquery-2.1.1.min.js"></script>
+    <script src="scripts/app.js"></script>
+    
+        <!-- Autodesk Viewer (from server: PROD) -->
+    <link rel="stylesheet" href="https://autodeskviewer.com/viewers/1.2.23/style.css" type="text/css">
+    <script src="https://autodeskviewer.com/viewers/2.9/viewer3D.min.js"></script>
+    <!--<link rel="stylesheet" href="https://developer.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.2.23" type="text/css">
+    <script src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.2.23"></script>-->
+
+        <!-- Autodesk Viewer (from server: DEV) -->
+    <!--<link rel="stylesheet" href="https://lmv.autodesk.com/viewers-dev/latest/style.css" type="text/css">
+    <script src="https://lmv.autodesk.com/viewers-dev/latest/viewer3D.min.js"></script>-->
+    
+        <!-- Autodesk Viewer (from server: STAGING) -->
+    <!--<link rel="stylesheet" href="https://developer-stg.api.autodesk.com/viewingservice/v1/viewers/style.css?v=v1.1.145" type="text/css">
+    <script src="https://developer-stg.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v1.1.145"></script>-->
+    
+    <script src="./scripts/MyAuthToken.js"></script>
+    <script>var debugging = true;</script>
+</head>
+
+<body onload="loadInitialModel();" oncontextmenu="return debugging;">
+
+  <!-- header -->
+  <div class="page-heading">
+    <div class="page-heading-cell">
+      <h1>
+        LMV Nav Test
+      </h1>
+    </div>
+    <div class="page-heading-cell">
+      <label for="pu_modelToLoad">Select Model</label>
+      <select id="pu_modelToLoad" class="select-dark" name="modelToLoad">
+          <!-- Options filled in by function in LoadModel.js -->
+      </select>
+    </div>
+    <div class="page-heading-cell">
+      <label for="pu_viewToLoad">Secondary View</label>
+      <select id="pu_viewToLoad" class="select-dark" name="viewToLoad">
+          <!-- Options filled in by function in LoadModel.js -->
+      </select>
+    </div>
+  </div>
+
+  <!-- Inspector column -->
+  <div class="project-info-column">
+
+    <ul class="tab-buttons" id="tab_buttons">
+      <li class="tab-button active">
+          <a href="#tab_panel_1" id="tab_button_1"><span class="icon icon-large icon-report"></span><span>Reports</span></a>
+      </li>
+      <li class="tab-button">
+          <a href="#tab_panel_2" id="tab_button_2"><span class="icon icon-large icon-chart"></span><span>Relationships</span></a>
+      </li>
+      <li class="tab-button">
+          <a href="#tab_panel_3" id="tab_button_3"><span class="icon icon-large icon-cost"></span><span>Costs</span></a>
+      </li>
+      <li class="tab-button">
+          <a href="#tab_panel_4" id="tab_button_4"><span class="icon icon-large icon-theme"></span><span>Themes</span></a>
+      </li>
+      <li class="tab-button">
+          <a href="#tab_panel_5" id="tab_button_5"><span class="icon icon-large icon-play"></span><span>Presentation</span></a>
+      </li>
+    </ul>
+
+    <div class="tab-panel active" id="tab_panel_1">
+      <label for="pu_reportToRun">Report</label>
+        <select id="pu_reportToRun" class="select-light" name="reportToRun" disabled>
+          <!-- Options filled in by function in Report_PieChart.js -->
+        </select>
+      <label for="pu_sortOrder">Sort Order</label>
+      <select id="pu_sortOrder" class="select-light" name="sortOrder" disabled>
+          <option value="value-asc">Value - Ascending</option>
+          <option value="value-desc" selected="selected">Value - Descending</option>
+          <option value="label-asc">Label - Ascending</option>
+          <option value="label-desc">Label - Descending</option>
+          <option value="random">Random</option>
+      </select>
+      <div id="reportinput"></div>
+      <div class="svgcanvas">
+        <div id="pieChart">
+        </div>
+        <div id="barChart">
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab_panel_2">
+      <!--<button id="bn_showRelationships" class="btn btn-primary">Show Relationships</button>-->
+      <button id="bn_showObjsonSheet" class="btn btn-primary">Show "OnSheet but not Model"</button>
+      <button id="bn_showWhereViewable" class="btn btn-primary">Show where viewable</button>
+      <div id="sheetThumbs">
+          <img id="img_thumbnail"></img>
+          <!-- Sheet thumbnails go here -->
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab_panel_3">
+      <button id="bn_showCosts" class="btn btn-primary">Show Costs (Not Implemented)</button>
+    </div>
+
+    <div class="tab-panel" id="tab_panel_4">
+        <label for="pu_colorTheme">Themes</label>
+        <select id="pu_colorTheme" class="select-light" name="colorTheme">
+        </select>
+        <!--
+        <button id="thmbtn" type="button">Add Theme</button>
+        -->
+        <input id="nonpropchckbx" type="checkbox">
+        <label for="nonpropchckbx">Show Non-applicable</label>
+      <div class="svgcanvas">
+        <div id="themetitle">
+        </div>
+        <div id="themecanvas">
+        </div>
+      </div>
+   
+    </div>
+
+    <div class="tab-panel" id="tab_panel_5">
+        <button id="tourbtn" type="button">Start Tour</button>
+        <button id="viewportbtn" type="button">Add Pin</button>
+        <input id="pincheckbox" type="checkbox">
+        <label for="pincheckbox">Hide Pins</label>
+      <div id="pintablelist"></div>
+    </div>
+
+  </div>
+
+  <!-- 3D Model Viewer -->
+  <div class="project-container group">
+    <div class="project-view-column">
+        <div id="viewerMain">
+        <!-- Upon the viewer initialization, it will append a div to the above div to insert the viewer.  It
+             will use 100% width and height so that it will fill up whatever the above div's dimensions are.
+             NOTE: Height must be set for this object. -->
+        </div>
+    </div>
+  </div>
+
+  <!-- 2D Model Viewer -->
+  <div class="project-container group">
+      <div class="project-view-column">
+        <div id="viewerSecondary">
+            <!-- Upon the viewer initialization, it will append a div to the above div to insert the viewer.  It
+                 will use 100% width and height so that it will fill up whatever the above div's dimensions are.
+                 NOTE: Height must be set for this object. -->
+        </div>
+    </div>
+  </div>
+
+  <script src="./scripts/libs/d3/d3.min.js"></script>
+  <script src="./scripts/libs/d3pie/d3pie.js"></script>
+  <script src="./scripts/libs/nvd3/nv.d3.min.js"></script>
+  <script src="./scripts/LoadModel.js"></script>
+  <script src="./scripts/ReportData.js"></script>
+  <script src="./scripts/Report_BarChart.js"></script>
+  <script src="./scripts/Report_PieChart.js"></script>
+  <script src="./scripts/Relationships.js"></script>
+  <script src="./scripts/Themes.js"></script>
+  <script src="./scripts/CameraPin.js"></script>
+  <script src="./scripts/PinData.js"></script>
+  <script src="./scripts/PinUI.js"></script>
+</body>
