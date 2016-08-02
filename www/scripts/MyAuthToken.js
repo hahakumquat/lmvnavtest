@@ -87,6 +87,7 @@ MyAuthToken.prototype.get = function()
         type: 'GET',
         async: false,
         success: function(ajax_data) {
+            debugger
             console.log("AUTH TOKEN: " + ajax_data["access_token"]);
             retVal = ajax_data.access_token;  // NOTE: this only works because we've made the ajax call Synchronous (and "this" is not valid in this scope!)
             expires_in = ajax_data.expires_in;
